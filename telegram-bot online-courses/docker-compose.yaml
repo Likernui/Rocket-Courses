@@ -1,0 +1,22 @@
+services:
+  bot:
+    build: .
+    environment:
+      - DB_URL=postgresql+asyncpg://postgres:ardtim25@db:5432/online_courses
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: ardtim25
+      POSTGRES_DB: online_courses
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
